@@ -1,0 +1,49 @@
+import java.util.Scanner;
+public class SortingTechniques {
+	public static void BubbleSort(int []arr)
+	{
+		int i,j, temp;
+		for(i=0; i<arr.length-1; i++)
+		{
+			for(j=0; j<arr.length-i-1; j++)
+			{
+				if(arr[j]>arr[j+1]) 
+				{
+					temp=arr[j];
+					arr[j]=arr[j+1];
+					arr[j+1]=temp;
+				}
+			}
+		}
+	}
+	public static void SelectionSort(int [] arr)
+	{
+		int i,j, temp;
+		for(i=0; i<arr.length-1; i++)
+		{
+			for(j=i+1; j<arr.length; j++)
+			{
+				if(arr[i]>arr[j])
+				{
+					temp=arr[i];
+					arr[i]=arr[j];
+					arr[j]=temp;
+				}
+			}
+		}
+	}
+	public static void main(String[] args) {
+		int []arr=new int[5];
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter five integers");
+		for(int i=0; i<arr.length; i++)
+			arr[i]=sc.nextInt();
+		
+		//BubbleSort(arr);
+		SelectionSort(arr);
+		
+		System.out.println("Array elements:");
+		for(int i=0; i<arr.length; i++)
+			System.out.print(arr[i]+"   ");
+	}
+}
