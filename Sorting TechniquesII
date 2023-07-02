@@ -1,0 +1,143 @@
+public class SortingAlgo {
+	public static int loopCount = 0;
+
+	public static void bubbleSort(int[] arr) {
+		loopCount = 0;
+		int elementPos = arr.length - 1;
+		while (elementPos >= 1) {
+			int currentPos = 0;
+			while (currentPos < elementPos) {
+				++loopCount;
+				if (arr[currentPos] > arr [currentPos + 1]) {
+					// Swap
+					int t = arr[currentPos];
+					arr[currentPos] = arr[currentPos + 1];
+					arr[currentPos + 1] = t;
+				}
+				++currentPos;
+			}
+			--elementPos;
+		}
+	}
+
+	public static void bubbleSortOptimised(int[] arr) {
+		loopCount = 0;
+		int elementPos = arr.length - 1;
+		while (elementPos >= 1) {
+			int swapCount = 0;
+			int currentPos = 0;
+			while (currentPos < elementPos) {
+				++loopCount;
+				if (arr[currentPos] > arr [currentPos + 1]) {
+					// Swap
+					int t = arr[currentPos];
+					arr[currentPos] = arr[currentPos + 1];
+					arr[currentPos + 1] = t;
+					++swapCount;
+				}
+				++currentPos;
+			}
+			if (swapCount == 0) {
+				return;
+			}
+			--elementPos;
+		}
+	}
+
+	public static void selectionSort(int[] arr) {
+		loopCount = 0;
+		int elementPos = arr.length - 1;
+		while (elementPos >= 1) {
+			int largestElementPos = elementPos;
+			int currentPos = 0;
+			while (currentPos < elementPos) {
+				++loopCount;
+				if (arr[currentPos] > arr [largestElementPos]) {
+					largestElementPos = currentPos;
+				}
+				++currentPos;
+			}
+			if (elementPos != largestElementPos) {
+				// Swap
+				int t = arr[elementPos];
+				arr[elementPos] = arr[largestElementPos];
+				arr[largestElementPos] = t;
+			}
+			--elementPos;
+		}
+	}
+
+	public static void insertionSort(int[] arr) {
+		loopCount = 0;
+		int sortedArraySize = 1;
+		while (sortedArraySize < arr.length) {
+			int newElement = arr[sortedArraySize];
+			int elementPos = sortedArraySize - 1;
+			while (elementPos >= 0) {
+				++loopCount;
+				if (newElement < arr[elementPos]) {
+					arr[elementPos + 1] = arr[elementPos];
+				} else {
+					break;
+				}
+				--elementPos;
+			}
+			arr[elementPos + 1] = newElement;
+			++sortedArraySize;
+		}
+	}
+
+	private static void merge(int[] arr, int startPos1, int endPos1,
+			int startPos2, int endPos2) {
+		int[] mergedArray = new int [(endPos1 - startPos1 + 1)
+		                             + (endPos2 - startPos2 + 1)];
+		int i1 = startPos1;
+		int i2 = startPos2;
+		int r = 0;
+
+		while ((i1 <= endPos1) && (i2 <= endPos2)) {
+			if (arr[i1] < arr[i2]) {
+				mergedArray[r] = arr[i1];
+				++i1;
+			} else {
+				mergedArray[r] = arr[i2];
+				++i2;
+			}
+			++r;
+		}
+		// Copy remaining elements from the other sorted array into mergedArray
+		while (i1 <= endPos1) {
+			mergedArray[r] = arr[i1];
+			++i1;
+			++r;
+		}
+		while (i2 <= endPos2) {
+			mergedArray[r] = arr[i2];
+			++i2;
+			++r;
+		}
+
+		// Copy merged elements back to arr
+		int i = startPos1;
+		int j = 0;
+		while (j < r) {
+			arr[i] = mergedArray[j];
+			++i;
+			++j;
+		}
+	}
+	private static void mergeSort(int[] arr, int startPos, int endPos) {
+		// base case = array sorted (number of elements <= 1)
+		if ((endPos - startPos + 1) <= 1) {
+			return;
+		}
+		int middlePos = (startPos + endPos) / 2;
+		mergeSort(arr, startPos, middlePos);
+		mergeSort(arr, middlePos + 1, endPos);
+
+		merge(arr, startPos, middlePos, middlePos + 1, endPos);
+	}
+	public static void mergeSort(int[] arr) {
+		mergeSort(arr, 0, arr.length - 1);
+	}
+}
